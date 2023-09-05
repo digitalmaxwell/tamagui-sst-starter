@@ -47,3 +47,6 @@ thumbs.db
 
 # sst
 .sst/**
+
+# .vscode
+.vscode/**
