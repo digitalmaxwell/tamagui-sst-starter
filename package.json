@@ -1,0 +1,51 @@
+{
+  "name": "next-expo-solito-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "sst dev",
+    "build": "sst build",
+    "deploy": "sst deploy",
+    "remove": "sst remove",
+    "console": "sst console",
+    "typecheck": "tsc --noEmit",
+    "native": "cd apps/expo && yarn start",
+    "watch": "yarn workspaces foreach -pi run watch",
+    "vercel:install": "yarn set version 3.5 && yarn install",
+    "web": "yarn build && cd apps/next && yarn next",
+    "web:extract": "DISABLE_EXTRACTION=false yarn workspace next-app dev",
+    "web:prod": "yarn workspace next-app build",
+    "web:prod:serve": "yarn workspace next-app serve",
+    "fix": "manypkg fix",
+    "postinstall": "yarn check-deps && yarn build",
+    "build2": "yarn workspaces foreach --exclude next-app run build",
+    "upgrade:tamagui": "yarn up '*tamagui*'@latest '@tamagui/*'@latest react-native-web-lite@latest",
+    "upgrade:tamagui:canary": "yarn up '*tamagui*'@canary '@tamagui/*'@canary react-native-web-lite@canary",
+    "check-deps": "check-dependency-version-consistency ."
+  },
+  "resolutions": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-refresh": "^0.14.0",
+    "react-native-svg": "13.4.0",
+    "react-native-web": "^0.18.12"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.18.9",
+    "@manypkg/cli": "^0.19.1",
+    "@tsconfig/node16": "^16.1.1",
+    "aws-cdk-lib": "2.91.0",
+    "check-dependency-version-consistency": "^3.0.3",
+    "constructs": "10.2.69",
+    "eslint": "^8.21.0",
+    "node-gyp": "^9.3.1",
+    "prettier": "^2.7.1",
+    "sst": "^2.24.22",
+    "turbo": "^1.10.3",
+    "typescript": "^5.2.2"
+  },
+  "packageManager": "yarn@3.5.0"
+}

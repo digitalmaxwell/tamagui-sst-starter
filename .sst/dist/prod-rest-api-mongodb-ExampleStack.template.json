@@ -1,0 +1,504 @@
+{
+ "Resources": {
+  "CustomResourceHandlerServiceRole41AEC181": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "rest-api-mongodb"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "prod"
+     }
+    ]
+   }
+  },
+  "CustomResourceHandlerE8FB56BA": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-015188805105-us-east-1",
+     "S3Key": "9bdf697e040832d4188ef3b6d1918862af2edd0fafbcd7b517f2952b632aa4fa.zip"
+    },
+    "Handler": "index.handler",
+    "MemorySize": 1024,
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomResourceHandlerServiceRole41AEC181",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs16.x",
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "rest-api-mongodb"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "prod"
+     }
+    ],
+    "Timeout": 900
+   },
+   "DependsOn": [
+    "CustomResourceHandlerServiceRole41AEC181"
+   ]
+  },
+  "ApiCD79AAA0": {
+   "Type": "AWS::ApiGatewayV2::Api",
+   "Properties": {
+    "CorsConfiguration": {
+     "AllowCredentials": false,
+     "AllowHeaders": [
+      "*"
+     ],
+     "AllowMethods": [
+      "*"
+     ],
+     "AllowOrigins": [
+      "*"
+     ]
+    },
+    "Name": "prod-rest-api-mongodb-Api",
+    "ProtocolType": "HTTP",
+    "Tags": {
+     "sst:app": "rest-api-mongodb",
+     "sst:stage": "prod"
+    }
+   }
+  },
+  "ApiDefaultStage1AAE989B": {
+   "Type": "AWS::ApiGatewayV2::Stage",
+   "Properties": {
+    "AccessLogSettings": {
+     "DestinationArn": {
+      "Fn::GetAtt": [
+       "ApiLogGroup1717FE17",
+       "Arn"
+      ]
+     },
+     "Format": "{\"requestTime\":\"$context.requestTime\",\"requestId\":\"$context.requestId\",\"httpMethod\":\"$context.httpMethod\",\"path\":\"$context.path\",\"routeKey\":\"$context.routeKey\",\"status\":$context.status,\"responseLatency\":$context.responseLatency,\"integrationRequestId\":\"$context.integration.requestId\",\"integrationStatus\":\"$context.integration.status\",\"integrationLatency\":\"$context.integration.latency\",\"integrationServiceStatus\":\"$context.integration.integrationStatus\",\"ip\":\"$context.identity.sourceIp\",\"userAgent\":\"$context.identity.userAgent\"}"
+    },
+    "ApiId": {
+     "Ref": "ApiCD79AAA0"
+    },
+    "AutoDeploy": true,
+    "StageName": "$default",
+    "Tags": {
+     "sst:app": "rest-api-mongodb",
+     "sst:stage": "prod"
+    }
+   }
+  },
+  "ApiLogGroup1717FE17": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/vendedlogs/apis/prod-rest-api-mongodb-Api-",
+       {
+        "Ref": "ApiCD79AAA0"
+       },
+       "/default"
+      ]
+     ]
+    },
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "rest-api-mongodb"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "prod"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain"
+  },
+  "ApiLambdaGETServiceRole210B6205": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "rest-api-mongodb"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "prod"
+     }
+    ]
+   }
+  },
+  "ApiLambdaGETServiceRoleDefaultPolicy013A8DEA": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ApiLambdaGETServiceRoleDefaultPolicy013A8DEA",
+    "Roles": [
+     {
+      "Ref": "ApiLambdaGETServiceRole210B6205"
+     }
+    ]
+   }
+  },
+  "ApiLambdaGETB1714EF3": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Architectures": [
+     "x86_64"
+    ],
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-015188805105-us-east-1",
+     "S3Key": "b26a0da4382330fa1d0d28fe2028fa386a43d1bb869c6c0542230aee145c4816.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "MONGODB_URI": "mongodb+srv://mongodb:m3pKeZb5ieP5rCLB@serverlessinstance0.vecphan.mongodb.net/?retryWrites=true&w=majority",
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+      "SST_APP": "rest-api-mongodb",
+      "SST_STAGE": "prod",
+      "SST_SSM_PREFIX": "/sst/rest-api-mongodb/prod/"
+     }
+    },
+    "EphemeralStorage": {
+     "Size": 512
+    },
+    "Handler": "packages/functions/src/lambda.handler",
+    "MemorySize": 1024,
+    "Role": {
+     "Fn::GetAtt": [
+      "ApiLambdaGETServiceRole210B6205",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs16.x",
+    "Tags": [
+     {
+      "Key": "sst:app",
+      "Value": "rest-api-mongodb"
+     },
+     {
+      "Key": "sst:stage",
+      "Value": "prod"
+     }
+    ],
+    "Timeout": 10,
+    "TracingConfig": {
+     "Mode": "Active"
+    }
+   },
+   "DependsOn": [
+    "ApiLambdaGETServiceRoleDefaultPolicy013A8DEA",
+    "ApiLambdaGETServiceRole210B6205"
+   ]
+  },
+  "ApiRouteGETIntegrationGET10DCD122": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "ApiCD79AAA0"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Fn::GetAtt": [
+      "ApiLambdaGETB1714EF3",
+      "Arn"
+     ]
+    },
+    "PayloadFormatVersion": "2.0"
+   }
+  },
+  "ApiRouteGETIntegrationGETPermission3C1F1A50": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "ApiLambdaGETB1714EF3",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:015188805105:",
+       {
+        "Ref": "ApiCD79AAA0"
+       },
+       "/*/*/"
+      ]
+     ]
+    }
+   }
+  },
+  "ApiRouteGET8AC7D3F8": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "ApiCD79AAA0"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "GET /",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "ApiRouteGETIntegrationGET10DCD122"
+       }
+      ]
+     ]
+    }
+   }
+  },
+  "ApiParameterurl09B86AB9": {
+   "Type": "AWS::SSM::Parameter",
+   "Properties": {
+    "Name": "/sst/rest-api-mongodb/prod/Api/Api/url",
+    "Tags": {
+     "sst:app": "rest-api-mongodb",
+     "sst:stage": "prod"
+    },
+    "Type": "String",
+    "Value": {
+     "Fn::GetAtt": [
+      "ApiCD79AAA0",
+      "ApiEndpoint"
+     ]
+    }
+   }
+  },
+  "FunctionSourcemapUploaderPolicy4149E801": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:GetObject",
+        "s3:PutObject"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":s3:::cdk-hnb659fds-assets-015188805105-us-east-1/*"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":s3:::sstbootstrap-useast124d14e4b-142gqo8sbyqwh/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "FunctionSourcemapUploaderPolicy4149E801",
+    "Roles": [
+     {
+      "Ref": "CustomResourceHandlerServiceRole41AEC181"
+     }
+    ]
+   }
+  },
+  "FunctionSourcemapUploader": {
+   "Type": "Custom::FunctionSourcemapUploader",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomResourceHandlerE8FB56BA",
+      "Arn"
+     ]
+    },
+    "app": "rest-api-mongodb",
+    "stage": "prod",
+    "bootstrap": "sstbootstrap-useast124d14e4b-142gqo8sbyqwh",
+    "bucket": "cdk-hnb659fds-assets-015188805105-us-east-1",
+    "functions": [
+     [
+      {
+       "Fn::GetAtt": [
+        "ApiLambdaGETB1714EF3",
+        "Arn"
+       ]
+      },
+      "5d26efb4d1876eedf1330dec15e4f3977cb8dcbcdedae6c777886710f399ad01.map"
+     ]
+    ]
+   },
+   "DependsOn": [
+    "FunctionSourcemapUploaderPolicy4149E801"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
+  }
+ },
+ "Outputs": {
+  "ApiEndpoint": {
+   "Value": {
+    "Fn::GetAtt": [
+     "ApiCD79AAA0",
+     "ApiEndpoint"
+    ]
+   }
+  },
+  "SSTMetadata": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "{\"app\":\"rest-api-mongodb\",\"stage\":\"prod\",\"version\":\"2.24.22\",\"metadata\":[{\"id\":\"Api\",\"addr\":\"c8c8a441aa98badff920cf3df383025ec0a4afee7f\",\"stack\":\"prod-rest-api-mongodb-ExampleStack\",\"type\":\"Api\",\"data\":{\"graphql\":false,\"url\":\"https://",
+      {
+       "Ref": "ApiCD79AAA0"
+      },
+      ".execute-api.us-east-1.",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/\",\"httpApiId\":\"",
+      {
+       "Ref": "ApiCD79AAA0"
+      },
+      "\",\"routes\":[{\"type\":\"function\",\"route\":\"GET /\",\"fn\":{\"node\":\"c84c800ac501fe1488ce776baa466c85bf436f6c11\",\"stack\":\"prod-rest-api-mongodb-ExampleStack\"}}]}},{\"id\":\"Lambda_GET_--\",\"addr\":\"c84c800ac501fe1488ce776baa466c85bf436f6c11\",\"stack\":\"prod-rest-api-mongodb-ExampleStack\",\"type\":\"Function\",\"data\":{\"arn\":\"",
+      {
+       "Fn::GetAtt": [
+        "ApiLambdaGETB1714EF3",
+        "Arn"
+       ]
+      },
+      "\",\"runtime\":\"nodejs16.x\",\"handler\":\"packages/functions/src/lambda.handler\",\"localId\":\"c84c800ac501fe1488ce776baa466c85bf436f6c11\",\"secrets\":[]}}]}"
+     ]
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

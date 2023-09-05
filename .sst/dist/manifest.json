@@ -1,0 +1,173 @@
+{
+  "version": "33.0.0",
+  "artifacts": {
+    "prod-rest-api-mongodb-ExampleStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "prod-rest-api-mongodb-ExampleStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "prod-rest-api-mongodb-ExampleStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://015188805105/us-east-1",
+      "properties": {
+        "templateFile": "prod-rest-api-mongodb-ExampleStack.template.json",
+        "tags": {
+          "sst:app": "rest-api-mongodb",
+          "sst:stage": "prod"
+        },
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::015188805105:role/cdk-hnb659fds-deploy-role-015188805105-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::015188805105:role/cdk-hnb659fds-cfn-exec-role-015188805105-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-015188805105-us-east-1/c85a72a277dc22f94dc2693758d6f36496b0f929678c760879e9fb88f1815f59.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "prod-rest-api-mongodb-ExampleStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::015188805105:role/cdk-hnb659fds-lookup-role-015188805105-us-east-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "prod-rest-api-mongodb-ExampleStack.assets"
+      ],
+      "metadata": {
+        "/prod-rest-api-mongodb-ExampleStack": [
+          {
+            "type": "aws:cdk:stack-tags",
+            "data": [
+              {
+                "Key": "sst:app",
+                "Value": "rest-api-mongodb"
+              },
+              {
+                "Key": "sst:stage",
+                "Value": "prod"
+              }
+            ]
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/CustomResourceHandler/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomResourceHandlerServiceRole41AEC181"
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/CustomResourceHandler/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomResourceHandlerE8FB56BA"
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/Api/Api/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiCD79AAA0"
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/Api/Api/DefaultStage/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiDefaultStage1AAE989B"
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/Api/LogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiLogGroup1717FE17"
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/Api/Lambda_GET_--/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiLambdaGETServiceRole210B6205"
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/Api/Lambda_GET_--/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiLambdaGETServiceRoleDefaultPolicy013A8DEA"
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/Api/Lambda_GET_--/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiLambdaGETB1714EF3"
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/Api/Route_GET_--/Integration_GET_--/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiRouteGETIntegrationGET10DCD122"
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/Api/Route_GET_--/Integration_GET_---Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiRouteGETIntegrationGETPermission3C1F1A50"
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/Api/Route_GET_--/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiRouteGET8AC7D3F8"
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/Api/Parameter_url/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiParameterurl09B86AB9"
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/SSTStackOutputApiEndpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiEndpoint"
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/SSTStackOutputSSTMetadata": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SSTMetadata"
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/FunctionSourcemapUploaderPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FunctionSourcemapUploaderPolicy4149E801"
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/FunctionSourcemapUploader/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FunctionSourcemapUploader"
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/prod-rest-api-mongodb-ExampleStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "prod-rest-api-mongodb-ExampleStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

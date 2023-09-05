@@ -1,0 +1,48 @@
+{
+  "version": "33.0.0",
+  "files": {
+    "fab6806627749baf75950548f67dcfceb63dec1d7bd97c25d082e305cc6d9c17": {
+      "source": {
+        "path": "asset.fab6806627749baf75950548f67dcfceb63dec1d7bd97c25d082e305cc6d9c17",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "015188805105-us-east-1": {
+          "bucketName": "cdk-hnb659fds-assets-015188805105-us-east-1",
+          "objectKey": "fab6806627749baf75950548f67dcfceb63dec1d7bd97c25d082e305cc6d9c17.zip",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::015188805105:role/cdk-hnb659fds-file-publishing-role-015188805105-us-east-1"
+        }
+      }
+    },
+    "4802b88ff95b9f55d47fed8c3185644545c13d0a169fec1d6f0d9562f403e13c": {
+      "source": {
+        "path": "asset.4802b88ff95b9f55d47fed8c3185644545c13d0a169fec1d6f0d9562f403e13c",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "015188805105-us-east-1": {
+          "bucketName": "cdk-hnb659fds-assets-015188805105-us-east-1",
+          "objectKey": "4802b88ff95b9f55d47fed8c3185644545c13d0a169fec1d6f0d9562f403e13c.zip",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::015188805105:role/cdk-hnb659fds-file-publishing-role-015188805105-us-east-1"
+        }
+      }
+    },
+    "c82fbfe87b00279795510dd6e3e28ed47cce66a9596d0110e2363cbfce3f218e": {
+      "source": {
+        "path": "maxwellchandler-rest-api-mongodb-ExampleStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "015188805105-us-east-1": {
+          "bucketName": "cdk-hnb659fds-assets-015188805105-us-east-1",
+          "objectKey": "c82fbfe87b00279795510dd6e3e28ed47cce66a9596d0110e2363cbfce3f218e.json",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::015188805105:role/cdk-hnb659fds-file-publishing-role-015188805105-us-east-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
